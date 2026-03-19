@@ -1,4 +1,4 @@
-# aidiet
+# Synergy
 
 A new Flutter project.
 
