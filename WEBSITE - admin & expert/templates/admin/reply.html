@@ -1,0 +1,103 @@
+
+{% extends 'admin/adminhome.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <!-- Bootstrap CSS -->
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      margin-top: 50px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      background-color: #ffffff;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .form-title {
+      margin-bottom: 20px;
+    }
+    .form-container textarea {
+      resize: none;
+    }
+
+       body {
+      background-color: #f8f9fa;
+    }
+    .card-container {
+      margin-top: 50px;
+    }
+    .complaint-card {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      font-weight: bold;
+    }
+    .card-body p {
+      margin-bottom: 10px;
+    }
+
+        body {
+      background-color: #f8f9fa;
+    }
+    .card-container {
+      margin-top: 50px;
+    }
+    .complaint-card {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      font-weight: bold;
+    }
+    .card-body p {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="text-center">
+
+</div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="form-container">
+          <h2 class="text-center form-title">Send Reply</h2>
+          <form action="/admin_reply_post" method="post">{% csrf_token %}
+
+            <div class="form-group">
+              <label for="message">Message</label>
+                <input type="hidden" value="{{ data.id }}" name="id">
+              <textarea class="form-control" id="message" name="c" rows="5" placeholder="Enter your Reply" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" name="submit">Submit Reply</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Bootstrap JS and jQuery (for Bootstrap) -->
+ </body>
+</html>
+
+
+{% endblock %}

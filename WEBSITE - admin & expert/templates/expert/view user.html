@@ -1,0 +1,161 @@
+{% extends 'expert/expertindex.html' %}
+{% block body %}
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #2ecc71;
+            --dark-text: #2c3e50;
+            --light-bg: #f8f9fa;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        .page-title {
+            font-weight: 800;
+            color: var(--dark-text);
+            letter-spacing: -1px;
+            margin-bottom: 40px;
+        }
+
+        /* Profile Card Styling */
+        .user-card {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .user-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Top Decorative Element */
+        .card-accent {
+            height: 80px;
+            background: linear-gradient(135deg, #1d1d1d 0%, #434343 100%);
+            width: 100%;
+        }
+
+        .image-container {
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border: 5px solid white;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-top: 15px;
+            font-size: 1.2rem;
+        }
+
+        .user-place {
+            font-size: 0.85rem;
+            color: #95a5a6;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Action Buttons Styling */
+        .action-group {
+            padding: 0 20px 25px 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-custom {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-chat {
+            background-color: #f1f3f5;
+            color: var(--dark-text);
+        }
+
+        .btn-chat:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .btn-workout {
+            background-color: var(--dark-text);
+            color: white;
+        }
+
+        .btn-workout:hover {
+            background-color: #000;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-custom i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container py-5">
+    <h2 class="text-center page-title">Client Management</h2>
+
+    <div class="row">
+        {% for i in data %}
+        <div class="col-md-4 mb-5">
+            <div class="card user-card">
+                <div class="card-accent"></div>
+                <div class="card-body text-center p-0">
+                    <div class="image-container">
+                        <img src="{{ i.Customer.Photo.url }}" class="profile-img" alt="User Image">
+                    </div>
+
+                    <h5 class="user-name">{{ i.Customer.Name }}</h5>
+                    <div class="user-place">
+                        <i class="fas fa-map-marker-alt me-1"></i> {{ i.Customer.Place }}
+                    </div>
+
+                    <div class="action-group">
+                        <a href="/expert_chat_to_user/{{ i.Customer.Login.id }}" class="btn-custom btn-chat">
+                            <i class="far fa-comment-alt"></i> Chat
+                        </a>
+                        <a href="/view_workout_details/{{ i.Customer.id }}" class="btn-custom btn-workout">
+                            <i class="fas fa-dumbbell"></i> Workout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+
+{% endblock %}

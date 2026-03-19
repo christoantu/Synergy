@@ -1,0 +1,227 @@
+{% extends 'expert/expertindex.html' %}
+{% block body %}
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f9fafb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #111827;
+        }
+
+        .container-main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 30px;
+        }
+
+        /* Search Bar Styling */
+        .search-container {
+            position: relative;
+            width: 350px;
+            margin-top: 15px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        #workoutSearch {
+            width: 100%;
+            padding: 10px 15px 10px 35px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #workoutSearch:focus {
+            border-color: #111827;
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.05);
+        }
+
+        .add-btn-top {
+            background-color: #111827;
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .add-btn-top:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .workout-list {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .grid-row {
+            display: grid;
+            grid-template-columns: 150px 180px 1fr 100px 100px;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .list-labels {
+            background-color: #f3f4f6;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #4b5563;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .workout-item {
+            border-bottom: 1px solid #f3f4f6;
+            transition: background-color 0.2s;
+        }
+
+        .workout-item:last-child {
+            border-bottom: none;
+        }
+
+        .workout-item:hover {
+            background-color: #f9fafb;
+        }
+
+        .category-badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .title-text {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .desc-text {
+            color: #6b7280;
+            font-size: 0.85rem;
+            padding-right: 20px;
+            line-height: 1.4;
+        }
+
+        .view-link { color: #2563eb; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+        .delete-link { color: #dc2626; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+
+        #noResults {
+            display: none;
+            padding: 60px;
+            text-align: center;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-main">
+        <div class="header-flex">
+            <div>
+                <h2 style="font-weight: 800; margin: 0;">Workout Content</h2>
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="workoutSearch" placeholder="Search by title, category, or description...">
+                </div>
+            </div>
+            <a href="/expert_add_workout" class="add-btn-top">
+                <i class="fas fa-plus mr-1"></i> Add New Workout
+            </a>
+        </div>
+
+        <div class="workout-list">
+            <div class="grid-row list-labels">
+                <span>Category</span>
+                <span>Title</span>
+                <span>Description</span>
+                <span>Video</span>
+                <span>Action</span>
+            </div>
+
+            <div id="workoutContainer">
+                {% for i in data %}
+                <div class="grid-row workout-item">
+                    <div>
+                        <span class="category-badge searchable">{{ i.MAIN.workout }}</span>
+                    </div>
+                    <div class="title-text searchable">{{ i.title }}</div>
+                    <div class="desc-text searchable">{{ i.description|truncatechars:100 }}</div>
+                    <div>
+                        <a href="{{ i.video.url }}" target="_blank" class="view-link">
+                            <i class="fas fa-play mr-1"></i> View
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/delete_workout/{{ i.id }}" class="delete-link" onclick="return confirm('Delete this workout?')">
+                            <i class="far fa-trash-alt mr-1"></i> Delete
+                        </a>
+                    </div>
+                </div>
+                {% empty %}
+                <div style="padding: 60px; text-align: center; color: #9ca3af;">
+                    <i class="fas fa-video-slash fa-3x mb-3" style="opacity: 0.3;"></i>
+                    <p class="mb-0">No workout videos found. Click 'Add New' to begin.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div id="noResults">
+                <i class="fas fa-search fa-3x mb-3" style="opacity: 0.3;"></i>
+                <p class="mb-0">No workouts match your search criteria.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('workoutSearch').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('.workout-item');
+            let container = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                // Get all text content from elements with the 'searchable' class within this row
+                let text = row.innerText.toLowerCase();
+
+                if (text.includes(filter)) {
+                    row.style.display = "";
+                    visibleCount++;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Show "No Results" message if everything is hidden
+            container.style.display = (visibleCount === 0 && filter !== "") ? "block" : "none";
+        });
+    </script>
+</body>
+
+{% endblock %}

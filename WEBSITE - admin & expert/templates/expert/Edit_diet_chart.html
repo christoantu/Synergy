@@ -1,0 +1,196 @@
+{% extends 'expert/expertindex.html' %}
+{% block body %}
+
+<head>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin: 20px 0;
+        }
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-cancel {
+            background: #6c757d;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-cancel:hover {
+            background: #5a6268;
+            color: white;
+        }
+        .section-title {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h3 class="section-title">Edit Diet Plan</h3>
+
+            <form  method="post" enctype="multipart/form-data" name="form1" id="form1">
+                {% csrf_token %}
+
+                <input type="hidden" name="id" value="{{ data.id }}">
+
+                <!-- Customer Information (Read-only) -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Customer</label>
+                            <input type="text" class="form-control" value="{% if data.Customer %}{{ data.Customer.Name }}{% else %}No Customer{% endif %}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <input type="text" class="form-control" value="{{ data.gender }}" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health Profile (Read-only) -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">BMI Category</label>
+                            <input type="text" class="form-control" value="{{ data.bmi_category }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Blood Pressure</label>
+                            <input type="text" class="form-control" value="{{ data.blood_pressure }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Lifestyle</label>
+                            <input type="text" class="form-control" value="{{ data.lifestyle }}" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editable Diet Plan Fields -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="health_condition" class="form-label">Health Conditions *</label>
+                            <input type="text" name="health_condition" id="health_condition"
+                                   value="{{ data.health_condition }}" class="form-control"
+                                   placeholder="Enter health conditions (comma separated)" required>
+                            <small class="form-text text-muted">Update the health conditions as needed</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dietplan" class="form-label">Diet Plan *</label>
+                            <textarea name="dietplan" id="dietplan" class="form-control"
+                                      rows="6" placeholder="Enter detailed diet plan here..." required></textarea>
+                            <small class="form-text text-muted">Include meals, portions, timing, etc.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="excersiseplan" class="form-label">Exercise Plan *</label>
+                            <textarea name="excersiseplan" id="excersiseplan" class="form-control"
+                                      rows="6" placeholder="Enter detailed exercise plan here..." required></textarea>
+                            <small class="form-text text-muted">Include exercises, duration, frequency, etc.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Date (Auto-filled) -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Plan Date</label>
+                            <input type="text" class="form-control" value="{{ current_date }}" readonly>
+                            <small class="form-text text-muted">This will be automatically set to today's date</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button type="submit" name="button" id="button" class="btn btn-submit me-3">
+                            <i class="fas fa-save"></i> Update Diet Plan
+                        </button>
+                        <a href="javascript:history.back()" class="btn btn-cancel">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelector('input[value="{{ current_date }}"]').value = today;
+
+            // Form validation
+            const form = document.getElementById('form1');
+            form.addEventListener('submit', function(e) {
+                const dietplan = document.getElementById('dietplan').value;
+                const exerciseplan = document.getElementById('excersiseplan').value;
+
+                if (!dietplan.trim() || !exerciseplan.trim()) {
+                    e.preventDefault();
+                    alert('Please fill in both diet plan and exercise plan fields.');
+                }
+            });
+        });
+    </script>
+</body>
+{% endblock %}

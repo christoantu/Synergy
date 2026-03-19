@@ -1,0 +1,130 @@
+
+{% extends 'admin/adminhome.html' %}
+
+{% block body %}
+<head>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: white; /* Set body background to white */
+            color: black; /* Ensure text color is black for readability */
+        }
+
+        .form-container {
+            margin-top: 50px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-title {
+            margin-bottom: 20px;
+        }
+
+        .form-container textarea {
+            resize: none;
+        }
+
+        .card-container {
+            margin-top: 50px;
+        }
+
+        .complaint-card {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: white; /* White background for cards */
+        }
+
+        .card-header {
+            font-weight: bold;
+        }
+
+        .card-body p {
+            margin-bottom: 10px;
+        }
+
+        /* Form input fields and submit button styling */
+        .form-control {
+            background-color: #f8f9fa; /* Light gray background for input fields */
+            color: black; /* Black text in input fields */
+        }
+
+        .btn-warning {
+            background-color: #ffc107; /* Yellow button background */
+            border-color: #ffc107;
+        }
+
+        h2 {
+            color: black; /* Black color for the heading */
+        }
+
+        .card-link {
+            color: #007bff; /* Blue color for links */
+        }
+
+        .card-link:hover {
+            color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Complaints</h2><br>
+    <form action="" method="post">{% csrf_token %}
+        <div class="container">
+
+        </div>
+
+        <div class="container">
+            <div class="card-container row">
+                <!-- Loop through data and create cards -->
+                {% for i in a %}
+                    <div class="col-md-6">
+                        <div class="card complaint-card">
+                            <div class="card-body">
+                                <p><strong>Date:</strong> {{ i.date }}</p>
+                                <p><strong>User:</strong> {{ i.Customer.Name }}</p>
+                                <p><strong>Complaint:</strong> {{ i.complaints }}</p>
+                                <p>
+                                    {% if i.reply == 'pending' %}
+                                        <a href="/admin_reply/{{ i.id }}" class="card-link">Reply</a>
+                                    {% else %}
+                                        <p class="card-text">Reply: {{ i.reply }}</p>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for i in b %}
+                    <div class="col-md-6">
+                        <div class="card complaint-card">
+                            <div class="card-body">
+                                <p><strong>Date:</strong> {{ i.date }}</p>
+                                <p><strong>User:</strong> {{ i.USER.name }}</p>
+                                <p><strong>Complaint:</strong> {{ i.complaints }}</p>
+                                <p><strong>Status:</strong> {{ i.status }}</p>
+                                <p>
+                                    {% if i.status == 'pending' %}
+                                        <a href="/admin_reply_expert/{{ i.id }}" class="card-link">Reply</a>
+                                    {% else %}
+                                        <p class="card-text">Reply: {{ i.reply }}</p>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </form>
+</body>
+
+{% endblock %}

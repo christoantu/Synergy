@@ -1,0 +1,146 @@
+{% extends 'admin/adminhome.html' %}
+
+{% block body %}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Work Assignments</h2>
+            <p class="text-muted small">Monitor tasks assigned by experts to customers</p>
+        </div>
+        <a href="/assign_work" class="btn btn-primary px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-2"></i>New Assignment
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search text-muted"></i>
+                        </span>
+                        <input type="text" id="workSearch" class="form-control border-start-0"
+                               placeholder="Search by expert, customer, or work type...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive" style="max-height: 700px; overflow-y: auto;">
+                <table class="table table-hover align-middle mb-0" id="workTable">
+                    <thead class="bg-light sticky-top" style="z-index: 5;">
+                        <tr>
+                            <th class="ps-4 py-3">Expert & Customer</th>
+                            <th>Work Title</th>
+                            <th>Work Details</th>
+                            <th>Assigned Date</th>
+                            <th class="text-center pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr class="work-row">
+                            <td class="ps-4">
+                                <div class="d-flex flex-column">
+                                    <div class="mb-1">
+                                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.65rem;">Expert</small>
+                                        <div class="fw-bold text-primary search-expert">{{ i.EXPERT.name }}</div>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.65rem;">Customer</small>
+                                        <div class="text-dark search-customer">{{ i.Customer.Name }}</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-soft-info text-info px-3 py-2 search-work"
+                                      style="background-color: #e0f7fa; font-weight: 600;">
+                                    {{ i.work }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="text-muted small" style="max-width: 250px; white-space: normal;">
+                                    {{ i.details }}
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="small text-secondary">
+                                    <i class="bi bi-calendar3 me-2"></i>{{ i.date }}
+                                </div>
+                            </td>
+
+                            <td class="text-center pe-4">
+                                <a href="/delete_assign_work/{{ i.id }}"
+                                   class="btn btn-outline-danger btn-sm px-3"
+                                   onclick="return confirm('Remove this assignment?')">
+                                    <i class="bi bi-trash me-1"></i>Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <i class="bi bi-clipboard-x display-4 text-muted"></i>
+                                <p class="text-muted mt-2">No work assignments found.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f8f9fa; }
+
+    .table thead th {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #495057;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .work-row { transition: all 0.2s; }
+    .work-row:hover { background-color: #f8fbff !important; }
+
+    /* Scrollbar Styling */
+    .table-responsive::-webkit-scrollbar { width: 6px; }
+    .table-responsive::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('workSearch');
+        const rows = document.querySelectorAll('.work-row');
+
+        searchInput.addEventListener('input', function() {
+            const term = searchInput.value.toLowerCase();
+
+            rows.forEach(row => {
+                const expert = row.querySelector('.search-expert').innerText.toLowerCase();
+                const customer = row.querySelector('.search-customer').innerText.toLowerCase();
+                const work = row.querySelector('.search-work').innerText.toLowerCase();
+
+                if (expert.includes(term) || customer.includes(term) || work.includes(term)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,212 @@
+
+
+
+{% extends 'expert/expertindex.html' %}
+{% block body %}
+
+<body>
+  <form action="/add_diet_chart_post" method="post" enctype="multipart/form-data" name="form1" id="form1">
+    {% csrf_token %}
+    <div class="container">
+      <!-- Row 1 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="textfield">Name</label>
+          <input type="text" name="textfield" required id="textfield" class="form-control" />
+        </div>
+        <div class="col-md-4">
+          <label for="textfield2">Date</label>
+          <input type="date" name="textfield2" required id="textfield2" class="form-control" />
+        </div>
+        <div class="col-md-4">
+          <label for="textfield3">Diet Chart</label>
+          <input type="file" name="fileField3" required id="textfield3" class="form-control" />
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="BMI">BMI</label>
+          <input type="text" name="BMI" required id="BMI" class="form-control" />
+        </div>
+        <div class="col-md-4">
+          <label for="Alcoholabuse">Alcohol Abuse</label>
+          <select name="Alcoholabuse" id="Alcoholabuse" class="form-control">
+            <option>Light or social drinkers</option>
+            <option>Moderate drinker</option>
+            <option>Heavy drinkers</option>
+            <option>No Use</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Allergies">Allergies</label>
+          <select name="Allergies" id="Allergies" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="Arthritis">Arthritis</label>
+          <select name="Arthritis" id="Arthritis" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Asthma">Asthma</label>
+          <select name="Asthma" id="Asthma" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Bloodpressure">Blood Pressure</label>
+          <select name="Bloodpressure" id="Bloodpressure" class="form-control">
+            <option>Low</option>
+            <option>Normal</option>
+            <option>High</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="Cancer">Cancer</label>
+          <select name="Cancer" id="Cancer" required class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Cholestrol">Cholesterol</label>
+          <select name="Cholestrol" id="Cholestrol" class="form-control">
+            <option>low-density lipoprotein (LDL)</option>
+            <option>high-density lipoprotein (HDL)</option>
+            <option>Lipoprotein(a) Cholesterol</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Depression">Depression</label>
+          <select name="Depression" id="Depression" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="Diabetes">Diabetes</label>
+          <select name="Diabetes" id="Diabetes" class="form-control">
+            <option>Low</option>
+            <option>Normal</option>
+            <option>High</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Druguse">Drug Use</label>
+          <select name="Druguse" id="Druguse" class="form-control">
+            <option>stimulants</option>
+            <option>narcotics</option>
+            <option>sedatives</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Gender">Gender</label>
+          <select name="Gender" id="Gender" class="form-control">
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 6 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="Headaches">Headaches</label>
+          <select name="Headaches" id="Headaches" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Heartproblem">Heart Problem</label>
+          <select name="Heartproblem" id="Heartproblem" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Kidney">Kidney</label>
+          <select name="Kidney" id="Kidney" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 7 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="Liver">Liver</label>
+          <select name="Liver" id="Liver" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Obicity">Obesity</label>
+          <select name="Obicity" id="Obicity" class="form-control">
+            <option>Normal</option>
+            <option>OverWeight</option>
+            <option>Obesity</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Pregnancy">Pregnancy</label>
+          <select name="Pregnancy" id="Pregnancy" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 8 -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="Smoking">Smoking</label>
+          <select name="Smoking" id="Smoking" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="Stroke">Stroke</label>
+          <select name="Stroke" id="Stroke" class="form-control">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Submit and Cancel Buttons -->
+      <div class="row mb-3">
+        <div class="col-md-12 text-center">
+          <input type="submit" name="button" id="button" value="Submit" class="btn btn-success" />
+          <input name="" type="button" value="Cancel" class="btn btn-danger" />
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+
+{% endblock %}

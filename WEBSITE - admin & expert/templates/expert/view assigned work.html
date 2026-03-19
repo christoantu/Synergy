@@ -1,0 +1,117 @@
+{% extends 'expert/expertindex.html' %}
+{% block body %}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-0">My Assignments</h2>
+            <p class="text-muted small">Manage and track fitness plans assigned to your clients</p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-primary rounded-pill px-3 py-2">Total Tasks: {{ data|length }}</span>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
+        <div class="card-body p-4">
+            <form action="" method="post" class="row g-3 align-items-end">
+                {% csrf_token %}
+                <div class="col-md-4">
+                    <label class="small fw-bold text-muted mb-1">Quick Find</label>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white border-2 border-end-0"><i class="bi bi-search"></i></span>
+                        <input type="text" id="expertWorkSearch" class="form-control border-2 border-start-0" placeholder="Search customer or work...">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row" id="workGrid">
+        {% for i in data %}
+        <div class="col-lg-4 col-md-6 mb-4 work-card">
+            <div class="card h-100 border-0 shadow-sm transition-hover" style="border-radius: 15px; border-left: 5px solid #0d6efd !important;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0 work-title">{{ i.work }}</h5>
+                        {% if i.status == 'Assigned' %}
+                            <span class="badge bg-soft-warning text-warning border border-warning px-2 py-1" style="font-size: 0.65rem;">Assigned</span>
+                        {% else %}
+                            <span class="badge bg-soft-success text-success border border-success px-2 py-1" style="font-size: 0.65rem;">COMPLETED</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1"><i class="bi bi-person me-1"></i> Customer</small>
+                        <h6 class="fw-bold text-secondary customer-name">{{ i.Customer.Name }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1"><i class="bi bi-info-circle me-1"></i> Details</small>
+                        <p class="card-text text-muted small mb-0">{{ i.details }}</p>
+                    </div>
+
+                    <hr class="my-3 opacity-25">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted small"><i class="bi bi-calendar3 me-1"></i> {{ i.date }}</span>
+{#                        <a href="#" class="btn btn-link btn-sm text-decoration-none p-0">View Full <i class="bi bi-arrow-right"></i></a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="text-muted mb-3"><i class="bi bi-clipboard-x display-1"></i></div>
+            <h4>No assignments found</h4>
+            <p>Try changing your date range or search terms.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    body { background-color: #f8f9fa; }
+
+    /* Hover animation for the cards */
+    .transition-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .transition-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+
+    .bg-soft-warning { background-color: #fff3cd; }
+    .bg-soft-success { background-color: #d1e7dd; }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: none;
+    }
+</style>
+
+<script>
+    // Simple JS search to filter cards instantly
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('expertWorkSearch');
+        const cards = document.querySelectorAll('.work-card');
+
+        searchInput.addEventListener('input', function() {
+            const term = searchInput.value.toLowerCase();
+
+            cards.forEach(card => {
+                const title = card.querySelector('.work-title').innerText.toLowerCase();
+                const customer = card.querySelector('.customer-name').innerText.toLowerCase();
+
+                if (title.includes(term) || customer.includes(term)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'expert/expertindex.html' %}
+{% block body %}
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            --bg-light: #f4f7f6;
+            --star-color: #f1c40f;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .feedback-header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-left: 5px solid #00b4db;
+        }
+
+        .review-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: #eee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #555;
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+        }
+
+        .star-rating {
+            color: var(--star-color);
+            font-size: 0.9rem;
+        }
+
+        .feedback-text {
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .feedback-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            font-size: 2rem;
+            color: #ddd;
+            font-family: serif;
+        }
+
+        .date-badge {
+            font-size: 0.75rem;
+            background: #f8f9fa;
+            padding: 4px 10px;
+            border-radius: 20px;
+            color: #888;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container py-5">
+    <div class="feedback-header d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="font-weight-bold mb-1">User Feedback</h2>
+            <p class="text-muted mb-0">Insights and reviews from your patients</p>
+        </div>
+        <div class="text-right">
+            <div class="h4 mb-0 font-weight-bold">{{ data|length }}</div>
+            <small class="text-uppercase text-muted" style="letter-spacing: 1px;">Total Reviews</small>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for i in data %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="review-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="user-avatar mr-3">
+                        {{ i.USER.name|slice:":1"|upper }}
+                    </div>
+                    <div>
+                        <h6 class="mb-0 font-weight-bold">{{ i.USER.name }}</h6>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <small class="text-dark font-weight-bold ml-1">{{ i.rating }}/5</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feedback-text mb-4">
+                    {{ i.feedback }}
+                </div>
+
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <span class="date-badge">
+                        <i class="far fa-calendar-alt mr-1"></i> {{ i.date }}
+                    </span>
+                    <button class="btn btn-sm btn-light text-muted">
+                        <i class="far fa-flag"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="empty-state">
+                <i class="fas fa-comment-slash fa-4x mb-3 opacity-25"></i>
+                <h3>No feedback yet</h3>
+                <p>Reviews from patients will appear here once they are submitted.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+{% endblock %}

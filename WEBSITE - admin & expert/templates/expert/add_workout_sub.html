@@ -1,0 +1,70 @@
+{% extends 'expert/expertindex.html' %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<div class="bg-light min-vh-100 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+
+                <div class="card border-0 shadow-sm rounded-4 p-4 p-sm-5 bg-white">
+
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold text-dark">Add New Workout</h2>
+                        <p class="text-secondary small">Define the category and upload instructions.</p>
+                    </div>
+
+                    <form enctype="multipart/form-data" action="/expert_add_workout_post" method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label for="category" class="form-label fw-semibold small text-muted">Category</label>
+                            <select name="category" id="category" class="form-select form-select-lg border-secondary-subtle" required style="font-size: 0.95rem;">
+                                <option value="" disabled selected>Select Workout Category</option>
+                                {% for i in data %}
+                                <option value="{{ i.id }}">{{ i.workout }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-semibold small text-muted">Workout Title</label>
+                            <input type="text" id="title" name="title" class="form-control form-control-lg border-secondary-subtle"
+                                   placeholder="e.g. Kettlebell Swings" required style="font-size: 0.95rem;">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-semibold small text-muted">Instructions / Description</label>
+                            <textarea id="description" name="description" class="form-control border-secondary-subtle"
+                                      rows="4" placeholder="Detail the form and sets..." required style="font-size: 0.95rem;"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="video-input" class="form-label fw-semibold small text-muted">Workout Video</label>
+                            <div class="p-3 bg-light border border-2 border-dashed rounded-3 text-center position-relative">
+                                <i class="fas fa-video fa-2x text-secondary mb-2"></i>
+                                <p class="mb-0 small text-secondary">Choose video file to upload</p>
+                                <input type="file" name="videoo" id="video-input" accept="video/*"
+                                       class="form-control mt-2 border-0 bg-transparent" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark btn-lg w-100 fw-bold rounded-3 mb-3 shadow-sm py-3">
+                            Publish Workout
+                        </button>
+
+                        <div class="text-center">
+                            <a href="javascript:history.back()" class="text-decoration-none text-secondary small">
+                                <i class="fas fa-arrow-left me-1"></i> Cancel and go back
+                            </a>
+                        </div>
+                    </form>
+
+                </div></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

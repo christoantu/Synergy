@@ -1,0 +1,148 @@
+{% extends 'admin/adminhome.html' %}
+
+{% block body %}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Customer Directory</h2>
+            <p class="text-muted small">Viewing all registered customer profiles and health data</p>
+        </div>
+        <div class="badge bg-primary px-3 py-2 rounded-pill">
+            Total Customers: {{ a|length }}
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search text-muted"></i>
+                        </span>
+                        <input type="text" id="userSearch" class="form-control border-start-0"
+                               placeholder="Search by name, blood type, or location...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive" style="max-height: 700px; overflow-y: auto;">
+                <table class="table table-hover align-middle mb-0" id="userTable">
+                    <thead class="bg-light sticky-top" style="z-index: 5;">
+                        <tr>
+                            <th class="ps-4 py-3">Customer</th>
+                            <th>Personal Info</th>
+                            <th>Health Stats</th>
+                            <th>Location</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in a %}
+                        <tr class="user-row">
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ i.Photo.url }}" alt="Profile"
+                                         class="rounded-circle border shadow-sm" width="55" height="55"
+                                         style="object-fit: cover; background-color: #f8f9fa;">
+                                    <div class="ms-3">
+                                        <h6 class="mb-0 fw-bold user-name text-dark">{{ i.Name }}</h6>
+                                        <small class="text-muted">ID: #CUST-{{ i.id }}</small>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="small">
+                                    <div class="mb-1"><strong>Gender:</strong> {{ i.Gender }}</div>
+                                    <div class="text-muted"><i class="bi bi-calendar-event me-1"></i>{{ i.Dob }}</div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="badge {% if i.Bloodtype == 'O+' or i.Bloodtype == 'A+' %}bg-danger{% else %}bg-info{% endif %} px-3 user-blood">
+                                    <i class="bi bi-droplet-fill me-1"></i>{{ i.Bloodtype }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="small text-secondary user-location">
+                                    <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                                    <strong>{{ i.Place }}</strong>, {{ i.District }}
+                                    <div class="text-muted" style="font-size: 0.75rem;">
+                                        {{ i.Post }} P.O, Pin: {{ i.Pin }}
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="small">
+                                    <div class="mb-1 fw-bold text-primary"><i class="bi bi-telephone me-2"></i>{{ i.Phone }}</div>
+                                    <div class="text-muted user-email"><i class="bi bi-envelope me-2"></i>{{ i.Email }}</div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <p class="text-muted mb-0">No customer records found.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f4f7f6; }
+
+    .table thead th {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #6c757d;
+        font-weight: 700;
+        padding: 1.2rem 1rem;
+        border-bottom: 2px solid #edf2f7;
+    }
+
+    .user-row { transition: all 0.2s; }
+    .user-row:hover { background-color: #f1f5f9 !important; transform: scale(1.001); }
+
+    /* Scrollbar Styling */
+    .table-responsive::-webkit-scrollbar { width: 6px; }
+    .table-responsive::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('userSearch');
+        const rows = document.querySelectorAll('.user-row');
+
+        searchInput.addEventListener('input', function() {
+            const term = searchInput.value.toLowerCase();
+
+            rows.forEach(row => {
+                const name = row.querySelector('.user-name').innerText.toLowerCase();
+                const email = row.querySelector('.user-email').innerText.toLowerCase();
+                const blood = row.querySelector('.user-blood').innerText.toLowerCase();
+                const location = row.querySelector('.user-location').innerText.toLowerCase();
+
+                if (name.includes(term) || email.includes(term) || blood.includes(term) || location.includes(term)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

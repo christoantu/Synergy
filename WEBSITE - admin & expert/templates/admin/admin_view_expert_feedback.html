@@ -1,0 +1,156 @@
+{#{% extends 'admin/adminhome.html' %}#}
+{#{% block body %}#}
+{##}
+{#<head>#}
+{##}
+{#    <style>#}
+{#        body, html {#}
+{#            margin: 0;#}
+{#            padding: 0;#}
+{#            font-family: Arial, sans-serif;#}
+{#        }#}
+{#        .container {#}
+{#            display: flex;#}
+{#            flex-wrap: wrap;#}
+{#            padding: 20px;#}
+{#            justify-content: center;#}
+{#        }#}
+{#        .card {#}
+{#            background: #f8f9fa;#}
+{#            border: 1px solid #ddd;#}
+{#            border-radius: 5px;#}
+{#            margin: 10px;#}
+{#            width: calc(33.333% - 20px);#}
+{#            box-sizing: border-box;#}
+{#            transition: transform 0.2s;#}
+{#        }#}
+{#        .card:hover {#}
+{#            transform: translateY(-5px);#}
+{#        }#}
+{#        .card-body {#}
+{#            padding: 15px;#}
+{#        }#}
+{#        .card-title {#}
+{#            font-size: 1.25rem;#}
+{#            margin: 0 0 10px;#}
+{#        }#}
+{#        .card-subtitle {#}
+{#            font-size: 1rem;#}
+{#            color: #6c757d;#}
+{#            margin: 0 0 10px;#}
+{#        }#}
+{#        .card-text {#}
+{#            font-size: 0.875rem;#}
+{#            margin-bottom: 10px;#}
+{#        }#}
+{#        .card-link {#}
+{#            color: #007bff;#}
+{#            text-decoration: none;#}
+{#            margin-right: 10px;#}
+{#        }#}
+{#        .card-link:hover {#}
+{#            text-decoration: underline;#}
+{#        }#}
+{##}
+{#        @media (max-width: 768px) {#}
+{#            .card {#}
+{#                width: calc(50% - 20px);#}
+{#            }#}
+{#        }#}
+{#        @media (max-width: 480px) {#}
+{#            .card {#}
+{#                width: calc(100% - 20px);#}
+{#            }#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{##}
+{##}
+{#<body>#}
+{#<h2>Feedback</h2>#}
+{#<form action="" method="post">{% csrf_token %}#}
+{#<div class="container">#}
+{#    <table class="table table-bordered">#}
+{#        <tr>#}
+{#            <th>From</th>#}
+{#            <th><input type="date" name="f" required class="form-control" ></th>#}
+{#            <th>To</th>#}
+{#            <th><input type="date" name="t" required   class="form-control"></th>#}
+{#            <th><input type="submit" value="Search" class="btn btn-warning" required></th>#}
+{#        </tr>#}
+{#    </table>#}
+{#</div>#}
+{#<div class="container">#}
+{#    {% for i in data %}#}
+{#    <div class="card">#}
+{#        <div class="card-body">#}
+{#            <h5 class="card-title">{{ i.USER.name }}</h5>#}
+{#            <h6 class="card-subtitle mb-2 text-muted">{{ i.feedback }}</h6>#}
+{#            <p class="card-text">{{ i.date }}</p>#}
+{##}
+{#        </div>#}
+{#    </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+{##}
+{#{% endblock %}#}
+
+
+{% extends 'admin/adminhome.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Feedback</h2>
+
+    <form action="" method="post" class="mb-4">
+        {% csrf_token %}
+{#        <div class="row justify-content-center">#}
+{#            <div class="col-md-4">#}
+{#                <input type="date" name="f" required class="form-control" placeholder="From Date">#}
+{#            </div>#}
+{#            <div class="col-md-4">#}
+{#                <input type="date" name="t" required class="form-control" placeholder="To Date">#}
+{#            </div>#}
+{#            <div class="col-md-2">#}
+{#                <input type="submit" value="Search" class="btn btn-warning w-100">#}
+{#            </div>#}
+{#        </div>#}
+    </form>
+
+    <div class="row">
+        {% for i in data %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.USER.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ i.feedback }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ i.rating }}</h6>
+                    <p class="card-text"><small class="text-muted">{{ i.date }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+
+</body>
+</html>
+
+{% endblock %}
