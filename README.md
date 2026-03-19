@@ -92,24 +92,55 @@ http://127.0.0.1:8000/
 
 ##  Screenshots
 
+**WEBSITE**
+
+
 **Admin page**
+
 <img width="1920" height="1080" alt="admin panel" src="https://github.com/user-attachments/assets/65300a43-856f-4ee5-8e26-fb7847b459df" />
 
+
 **Expert page**
+
 <img width="1920" height="1080" alt="expert panel" src="https://github.com/user-attachments/assets/7621a1a1-8c00-44c7-8b9b-9d489913d904" />
 
+
 **Login page**
+
 <img width="1920" height="1080" alt="Login page" src="https://github.com/user-attachments/assets/cc21b9a3-6c1b-41e1-82d7-010d72fc98fe" />
 
+
 **Chat page**
+
 <img width="1920" height="1080" alt="chat page" src="https://github.com/user-attachments/assets/ecf717d5-94ab-4ea0-b733-fdd8df7fb143" />
 
+
 **Expert registration**
+
 <img width="1920" height="1080" alt="Expert registration" src="https://github.com/user-attachments/assets/08785c8a-872a-4cec-a587-a535cbd8b54d" />
 
+
 **Expert-workout content**
+
 <img width="1920" height="1080" alt="Expert-workout content" src="https://github.com/user-attachments/assets/a3678fdd-17df-47e5-bef4-611271b8b47d" />
 
+
+
+**APPLICATION**
+
+
+**Home screen**
+
+<img width="650" height="1080" alt="image" src="https://github.com/user-attachments/assets/96313120-e969-43fc-bbc2-f818a5e77ead" />
+
+
+**AI Chatbot**
+
+<img width="650" height="1080" alt="image" src="https://github.com/user-attachments/assets/cc13d3b9-69fd-43b2-984f-f3437a1fe834" />
+
+**Weekly Calories**
+
+![WhatsApp Image 2026-02-14 at 3 42 28 PM](https://github.com/user-attachments/assets/51fc8957-ece8-4155-b4ed-840609aed502)
 
 
 
